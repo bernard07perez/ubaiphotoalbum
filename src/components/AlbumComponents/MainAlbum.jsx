@@ -19,7 +19,9 @@ import CreateAlbumDialogs from "./CreateAlbumDialogs.jsx";
 import { useState } from "react";
 import { GiConsoleController } from "react-icons/gi";
 
+/* Dataset receiver */
 const newAlbumRecords = ALBUM_RECORDS;
+
 let albumsName = "Albums";
 let retrivePrevRecAncestor = [];
 
@@ -51,11 +53,12 @@ export default function MainAlbum() {
     }));
   };
 
+  /* change the "setValue" for Image processing/manipulation pupose */
   const handleUploadPhotoRequest = (uploadedImageArr) => {
     handleUploadPhotoDailogClose();
 
     if (uploadedImageArr) {
-      setValue(uploadedImageArr); //change the "setValue" for Image processing/manipulation pupose
+      setValue(uploadedImageArr); //upload value goes here
     }
   };
 
@@ -69,10 +72,6 @@ export default function MainAlbum() {
       },
     });
   };
-
-  // function handleImageDailogClose() {
-  //   setOpenCreateAlbumDialog(false);
-  // }
 
   const handleCreateAlbClose = () => {
     setOpenCreateAlbumDialog(false);

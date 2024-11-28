@@ -23,6 +23,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
 import Autocomplete from "@mui/material/Autocomplete";
+import Tooltip from "@mui/material/Tooltip";
 import { ListItemButton } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
@@ -31,12 +32,14 @@ import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import UploadIcon from "@mui/icons-material/Upload";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { styled } from "@mui/material/styles";
 
 import { ALBUM_RECORDS } from "../../context/Album_Records";
+import UploadPhotosFaceTag from "../UploadPhoto/UploadPhotosFaceTag";
 import WarningMessage from "./WarningMessage";
 import ProgressBarLinear from "./ProgressBarLinear";
 
@@ -87,6 +90,27 @@ export default function UploadPhotosDialog({
   const [inputValue, setInputValue] = useState("");
   const [warningModal, setWarningModal] = useState(false);
   const warningBody = useRef("");
+
+  // #region Facetag Dialog for new selected photos
+  const [uploadPhotosFTdialog, setUploadPhotosFTdialog] = useState(false);
+  const [imageGetUrl, setImageGetUrl] = useState("");
+  const [imageGetFileName, setImageGetFileName] = useState("");
+
+  const handlePhotosFTDialogOpen = (img, indx) => {
+    console.log("enter in facetagging dialog");
+    console.log(img);
+    console.log(indx);
+
+    setImageGetUrl(img);
+    setImageGetFileName(indx);
+    setUploadPhotosFTdialog(true);
+  };
+
+  const handlePhotoFTdialogClose = (retrieveImageFT = {}) => {
+    // Manage retrieveImageFT data
+    setUploadPhotosFTdialog(false);
+  };
+  // #endregion
 
   const optionAlbumList = Array.from(ALBUM_RECORDS).map((val) => ({
     label: val.Name,
@@ -190,7 +214,7 @@ export default function UploadPhotosDialog({
           {/* <Stack direction={"row"} alignitems={"center"} spacing={2}> */}
           <Grid2 container spacing={2}>
             <Grid2
-              item
+              item="true"
               width={"23%"}
               sx={{
                 borderRight: "1px solid lightgray",
@@ -270,7 +294,7 @@ export default function UploadPhotosDialog({
                 ))}
               </List>
             </Grid2>
-            <Grid2 item width={"75%"}>
+            <Grid2 item="true" width={"75%"}>
               <Stack
                 key={"st1ky"}
                 id={"st1id"}
@@ -439,6 +463,25 @@ export default function UploadPhotosDialog({
                         alt={`Image ${index}`}
                         loading="lazy"
                       />
+                      <Tooltip title="Face Tag">
+                        <IconButton
+                          onClick={() => handlePhotosFTDialogOpen(img, index)}
+                          size="small"
+                          sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            color: "maroon",
+                            fontWeight: "bold",
+                            backgroundColor: "white",
+                            "&:hover": {
+                              backgroundColor: "#ffa500",
+                            },
+                          }}
+                        >
+                          <PersonAddAltIcon />
+                        </IconButton>
+                      </Tooltip>
                       <CheckBox
                         icon={
                           <CheckBoxOutlineBlankIcon
@@ -555,6 +598,14 @@ export default function UploadPhotosDialog({
         onClose={handleWarningModalClose}
         title="Upload photo"
         warnBody={<>{warningBody.current}</>}
+      />
+      <UploadPhotosFaceTag
+        open={uploadPhotosFTdialog}
+        onClose={handlePhotoFTdialogClose}
+        valueprop={{
+          imageFileUrl: imageGetUrl,
+          imageFileName: imageGetFileName,
+        }}
       />
     </>
   );
