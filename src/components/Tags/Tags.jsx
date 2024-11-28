@@ -16,7 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Footer from "../HeaderFooter/Footer";
 
 const Tags = () => {
-  return (
+  return (   
     <div className="min-h-screen bg-white">
       <Header
         pageMenu={[
