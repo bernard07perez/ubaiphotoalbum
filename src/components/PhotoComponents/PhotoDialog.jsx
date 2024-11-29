@@ -18,7 +18,7 @@ import { useEffect, useState, useRef } from "react";
 function PhotoDialog(props, images = null) {
   const { onClose, value: valueProp, open, ...other } = props;
   const [value, setValue] = useState(valueProp);
-  const albumnameArray = "Science Fair";
+  const title = "Photo Viewer";
 
   useEffect(() => {
     if (!open) {
@@ -56,7 +56,7 @@ function PhotoDialog(props, images = null) {
     >
       <Stack direction={"row"} sx={{ width: "100%", display: "flex" }}>
         <DialogTitle color="#7e0404" sx={{ width: "33%" }}>
-          {albumnameArray}
+          {title}
           <Stack
             direction={"row-reverse"}
             alignitems={"center"}
@@ -67,23 +67,6 @@ function PhotoDialog(props, images = null) {
           alignitems="center"
           sx={{ width: "33%", justifyContent: "center" }}
         >
-          <Tooltip
-            title="Tag photo"
-            sx={{
-              position: "absolute",
-              bottom: "0",
-              left: "4px",
-            }}
-          >
-            <IconButton
-              aria-label="Tag photo"
-              size="small"
-              onClick={""}
-              sx={{ ":hover": { color: "#7e0404" } }}
-            >
-              <SellIcon fontSize="large" />
-            </IconButton>
-          </Tooltip>
           <Tooltip
             title="Auto Play"
             sx={{

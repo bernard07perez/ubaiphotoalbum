@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   VscListUnordered,
   VscFolderOpened,
@@ -17,8 +18,9 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
 
-import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
@@ -27,6 +29,17 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SelectAllSharpIcon from "@mui/icons-material/SelectAllSharp";
 import AddIcon from "@mui/icons-material/Add";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import SearchFilterDialog from "./SearchFilterDialog";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 
 const muiAlbumActionButtonProp = {
   size: "small",
@@ -62,8 +75,20 @@ export default function ViewerActions({
   isAlbumViewModeClicked,
   isUploadPhotoClicked,
 }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [openFilterDialog, setOpenFilterDialog] = useState(false);
+
+  //Key Value Pair for this is {filterAttribute: ""}, {filterValue: ""}, {filterOperand: "and || or"}
+  const [filterValue, setFilterValue] = useState([]);
+
+  const handleFilterDialogClose = () => {
+    setOpenFilterDialog(false);
+  };
+  const handleFilterDialogSave = (filterValue) => {
+    setFilterValue((prevfilterValue) => (prevfilterValue = filterValue));
+    setOpenFilterDialog(false);
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -116,6 +141,17 @@ export default function ViewerActions({
               label="Password"
             />
           </FormControl>
+
+          <IconButton
+            size="medium"
+            sx={{ marginLeft: 2, color: "maroon", padding: 0 }}
+            onClick={() => setOpenFilterDialog(true)}
+          >
+            {" "}
+            <StyledBadge badgeContent={filterValue.length} color="inherit">
+              <FilterListIcon sx={{ fontSize: "2rem" }} />
+            </StyledBadge>
+          </IconButton>
         </Stack>
         <span className="text-center sm:max-lg:text-right sm:max-lg:w-[35%] w-[100%] font-arialblack text-red-800 text-2xl">
           <b>{albumLabel}</b>
@@ -241,6 +277,11 @@ export default function ViewerActions({
           <DriveFolderUploadIcon sx={menuitemicon} /> Upload Folders
         </MenuItem> */}
       </Menu>
+      <SearchFilterDialog
+        openFilterDialog={openFilterDialog}
+        isFilterDialogClose={handleFilterDialogClose}
+        isFilterDialogSave={handleFilterDialogSave}
+      />
     </>
   );
 }
