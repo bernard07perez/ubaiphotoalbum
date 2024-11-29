@@ -31,7 +31,6 @@ export default function UploadPhotosFaceTag(props) {
 
   useEffect(() => {
     setValue(valueprop);
-    console.log(value);
   }, [valueprop]);
 
   const handleCancel = () => {

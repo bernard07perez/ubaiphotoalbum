@@ -27,8 +27,9 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import UploadImageDialog from "../utils/UploadPhotosDialog.jsx";
+import PhotoEditDialog from "./PhotoEditDialog.jsx";
 import PhotoDialog from "./PhotoDialog.jsx";
+import UploadImageDialog from "../utils/UploadPhotosDialog.jsx";
 import PersonIcon from "@mui/icons-material/Person";
 import AlbumEmptyCover from "../../assets/img/react.svg";
 // import UploadPhotos from "./UploadPhotos.jsx";
@@ -56,7 +57,40 @@ export default function PhotoViewer({ retrieveData, isUploadPhotoClick }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDialog, setOpen] = useState(false);
 
+  const [editPhotodialog, setEditPhotodialog] = useState(false);
+  const [selectedPhotoToEdit, setSelectedPhotoToEdit] = useState({
+    imageIndex: 0,
+    imageFileName: "",
+    imageFileUrl: "",
+    keywordTag: [],
+    faceTag: [{}],
+  });
+
+  // onClose={handleEditPhotodialogClose}
+  // valueprop={{
+  //   imageFileUrl: imageGetUrl,
+  //   imageFileName: imageGetFileName,
+  //   imageCurrentKeywordTag: ["", ""],
+  //   imageCurrentFaceTag: [
+  //     { faceID: 0, faceName: "Name 1", imageFaceRegion: "" },
+  //     { faceID: 1, faceName: "Name 2", imageFaceRegion: "" },
+  //     { faceID: 2, faceName: "Name 3", imageFaceRegion: "" },
+  //   ],
+
   const open = Boolean(anchorEl);
+
+  const handleEditPhotodialogClose = () => {
+    setEditPhotodialog(false);
+  };
+
+  const handleEditPhotoDialogOpen = () => {
+    setEditPhotodialog(true);
+  };
+
+  const handleEditPhotodialogsSave = (valueprop) => {
+    //process received data
+    setEditPhotodialog(false);
+  };
 
   // const handleImageUploadRequest = (uploadedImageArr) => {
   //   setOpenUploadPhotosDialog(false);
@@ -73,9 +107,21 @@ export default function PhotoViewer({ retrieveData, isUploadPhotoClick }) {
   //   setOpenUploadPhotosDialog(true);
   // }
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleEditOptionClick = (e, indx, fileName, imageURL, phototags) => {
+    setSelectedPhotoToEdit((prevSelectedPhoto) => ({
+      ...prevSelectedPhoto,
+      imageIndex: indx,
+      imageFileUrl: imageURL,
+      imageFileName: fileName,
+      keywordTag: phototags[0].keywordtag.map((val) => val.kid),
+      faceTag: phototags[0].facetag,
+    }));
+
+    console.log(selectedPhotoToEdit);
+    // handleEditPhotoDialogOpen(); //open edit photo dialog
+    setAnchorEl(e.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -182,7 +228,15 @@ export default function PhotoViewer({ retrieveData, isUploadPhotoClick }) {
                       </Tooltip>
                       <Tooltip title="Photo Option">
                         <IconButton
-                          onClick={handleClick}
+                          onClick={(e) =>
+                            handleEditOptionClick(
+                              e,
+                              indx,
+                              photo.Name,
+                              imageView,
+                              photo.tags
+                            )
+                          }
                           size="medium"
                           sx={{
                             position: "absolute",
@@ -274,7 +328,7 @@ export default function PhotoViewer({ retrieveData, isUploadPhotoClick }) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handlePhotoViewerDialogOpen}>
+        <MenuItem onClick={handleEditPhotoDialogOpen}>
           <DriveFileRenameOutlineIcon /> Edit
         </MenuItem>
         <MenuItem onClick={handleClose}>
@@ -288,6 +342,17 @@ export default function PhotoViewer({ retrieveData, isUploadPhotoClick }) {
         open={openDialog}
         onClose={handlePhotoViewerDialogClose}
         value={""}
+      />
+      <PhotoEditDialog
+        open={editPhotodialog}
+        onClose={handleEditPhotodialogClose}
+        valueprop={{
+          indx: selectedPhotoToEdit.imageIndex,
+          fileName: selectedPhotoToEdit.imageFileName,
+          fileUrl: selectedPhotoToEdit.imageFileUrl,
+          keywordTag: selectedPhotoToEdit.keywordTag,
+          faceTag: selectedPhotoToEdit.faceTag, //{ faceID: 0, faceName: "Name 1", imageFaceRegion: "" },
+        }}
       />
       {/* <UploadPhotos
         id="upload-photos"
