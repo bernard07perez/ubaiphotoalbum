@@ -30,6 +30,12 @@ export default function MainAlbum() {
     { viewMode: "grid", contents: newAlbumRecords } // viewMode value can be grid or table
   );
 
+  const [albumEditInfo, setAlbumEditInfo] = useState({
+    albumName: "",
+    albumDate: "",
+    albumTagArr: [],
+  });
+
   const [openCreateAlbumDialog, setOpenCreateAlbumDialog] = useState(false);
   const [openUploadPhotosDialog, setOpenUploadPhotosDialog] = useState({
     openUploadDialog: false,
@@ -93,7 +99,7 @@ export default function MainAlbum() {
 
   const handlePrevRecordClick = (prevRec) => {
     if (prevRec.length > 1) {
-      let prevRecordData = ALBUM_RECORDS[prevRec[0] - 1];
+      let prevRecordData = ALBUM_RECORDS[prevRec[0] - 1]; //Retrieve Previous data once back button clicked
 
       for (let index = 1; index < prevRec.length - 1; index++) {
         const element = prevRec[index] - 1;
@@ -116,9 +122,17 @@ export default function MainAlbum() {
     }
   };
 
-  const handleEditAlbumOpen = () => {
+  const handleEditAlbumOpen = (albumEditInfoArgs) => {
+    setAlbumEditInfo((prev) => ({
+      ...prev,
+      albumName: albumEditInfoArgs.albumName, // Update albumName
+      albumDate: albumEditInfoArgs.albumDate, // Update albumDate
+      albumTagArr: albumEditInfoArgs.albumTagArr, // Update albumTagArr
+    }));
+
     setEditAlbumDialog(true);
   };
+
   const handleEditAlbumClose = () => {
     setEditAlbumDialog(false);
   };
@@ -240,7 +254,15 @@ export default function MainAlbum() {
         onImageDialogClose={handleUploadPhotoDailogClose}
         onImageUploadRequest={handleUploadPhotoRequest}
       />
-      <EditAlbumDialog open={editAlbumDialog} onClose={handleEditAlbumClose} />
+      <EditAlbumDialog
+        open={editAlbumDialog}
+        onClose={handleEditAlbumClose}
+        valueprop={{
+          albumName: albumEditInfo.albumName,
+          albumDate: albumEditInfo.albumDate,
+          tagArray: albumEditInfo.albumTagArr,
+        }}
+      />
       <Footer />
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -46,6 +46,21 @@ export default function AlbumTableViewer({
   retrieveData,
 }) {
   const [openDialog, setOpen] = useState(false);
+
+  const albumEditInfo = useRef({
+    albumName: "",
+    albumDate: "",
+    albumTagArr: [],
+  });
+
+  const handleEditClick = (e, albumInfo) => {
+    //albumInfo will be use for Edit Album Modal (Album Name, Album Date, Albm Tags)
+    albumEditInfo.current.albumName = albumInfo.albumName;
+    albumEditInfo.current.albumDate = albumInfo.albumDate;
+    albumEditInfo.current.albumTagArr = albumInfo.albumTagArr;
+
+    isEditAlbumClick(albumEditInfo.current); //Call and Pass the Album Information to Edit Modal
+  };
 
   const handlePhotoViewerDialogOpen = () => {
     setOpen(true);
@@ -114,7 +129,7 @@ export default function AlbumTableViewer({
                     {UsersTb.filter((user) => user.id === item.Owner)[0].uFname}
                   </TableCell>
                   <TableCell>{item?.contents?.length}</TableCell>
-                  <TableCell>{item?.tags["keywordtag"]}</TableCell>
+                  <TableCell>{item?.tags[0].keywordtag}</TableCell>
                   <TableCell>
                     <Stack direction={"row-reverse"} spacing={2}>
                       <Button
@@ -128,7 +143,13 @@ export default function AlbumTableViewer({
                         size="small"
                         startIcon={<Edit />}
                         {...muiAlbumActionButtonProp}
-                        onClick={isEditAlbumClick}
+                        onClick={(e) =>
+                          handleEditClick(e, {
+                            albumName: item.Name,
+                            albumDate: item.DateCreated,
+                            albumTagArr: item?.tags[0].keywordtag,
+                          })
+                        }
                       >
                         Edit
                       </Button>

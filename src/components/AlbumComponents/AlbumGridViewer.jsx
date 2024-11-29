@@ -9,7 +9,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import AlbumEmptyCover from "../../assets/img/react.svg";
 
@@ -34,18 +34,30 @@ export default function AlbumGridViewer({
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const albumEditInfo = useRef({
+    albumName: "",
+    albumDate: "",
+    albumTagArr: [],
+  });
+
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e, albumInfo) => {
+    //albumInfo will be use for Edit Album Modal (Album Name, Album Date, Albm Tags)
+    albumEditInfo.current.albumName = albumInfo.albumName;
+    albumEditInfo.current.albumDate = albumInfo.albumDate;
+    albumEditInfo.current.albumTagArr = albumInfo.albumTagArr;
+
+    setAnchorEl(e.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const handleEdit = () => {
     setAnchorEl(null);
-    isEditAlbumClick();
+    isEditAlbumClick(albumEditInfo.current); //Call and Pass the Album Information to Edit Modal
   };
   const handleDelete = () => {
     setAnchorEl(null);
@@ -128,7 +140,13 @@ export default function AlbumGridViewer({
                   </span>
                   <Tooltip title="Photo Option">
                     <IconButton
-                      onClick={handleClick}
+                      onClick={(e) =>
+                        handleClick(e, {
+                          albumName: albums.Name,
+                          albumDate: albums.DateCreated,
+                          albumTagArr: albums.tags[0].keywordtag,
+                        })
+                      }
                       size="medium"
                       sx={{
                         marginLeft: "auto",

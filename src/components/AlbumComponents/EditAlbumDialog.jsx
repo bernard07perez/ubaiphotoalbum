@@ -31,28 +31,45 @@ const tags = [
 ];
 
 export default function EditAlbumDialog(props) {
-  const { onClose, value: valueProp, open, ...other } = props;
-  const [value, setValue] = useState(valueProp);
+  const { onClose, valueprop, open, ...other } = props;
+
+  // const albumInfo = useRef({albumName: valueProp["albumName"], albumDate: valueProp["albumDate"]})
+  const [albumNameInput, setAlbumNameInput] = useState("");
+  const [albumDateInput, setAlbumDateInput] = useState("");
+
   const [createdTagArray, setCreatedTagArray] = useState([]);
   const [createTagInput, setCreateTagInput] = useState("");
 
   useEffect(() => {
-    if (!open) {
-      setValue(valueProp);
-    }
-  }, [valueProp, open]);
+    // setValue(valueprop);
+    setAlbumNameInput(valueprop.albumName);
+    setAlbumDateInput(valueprop.albumDate);
+    // const retrieveTagArrValue = valueprop.tagArray.map((val)=>val["kid"]);
+    setCreatedTagArray(valueprop.tagArray);
+  }, [valueprop]);
 
   const handleEditAlbumCancel = () => {
     onClose();
   };
 
   const handleEditAlbumSave = () => {
-    onClose(value);
+    // SET the new value of Album Name, Album Date and the new Tag Array as an Object
+    // value.current = {...albumInfo,createdTagArray};
+
+    onClose({
+      albumName: albumNameInput,
+      albumDate: albumDateInput,
+      albumTagArray: createdTagArray,
+    });
   };
 
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  // };
+  const handleAlbumNameChange = (albumNameArg) => {
+    setAlbumNameInput(albumNameArg);
+  };
+
+  const handleAlbumDateChange = (albumDateArg) => {
+    setAlbumDateInput(albumDateArg);
+  };
 
   const handleCreateNewTag = () => {
     if (createTagInput && !createdTagArray.includes(createTagInput)) {
@@ -97,7 +114,7 @@ export default function EditAlbumDialog(props) {
           }}
         >
           <Grid2
-            item
+            item="true"
             sx={{
               flexShrink: 0, // Prevent shrinking
               height: "120px", // Fixed or minimum height
@@ -118,10 +135,10 @@ export default function EditAlbumDialog(props) {
               <OutlinedInput
                 id="album-name-label"
                 type="text"
-                // color="none"
+                value={albumNameInput}
                 size="medium"
                 label="Album Name"
-                onChange={(e) => setCreateTagInput(e.target.value)}
+                onChange={(e) => handleAlbumNameChange(e.target.value)}
                 sx={{
                   color: "maroon",
                   "& .MuiOutlinedInput-notchedOutline": {
@@ -148,10 +165,10 @@ export default function EditAlbumDialog(props) {
               <OutlinedInput
                 id="album-date-label"
                 type="text"
-                // color="none"
+                value={albumDateInput}
                 size="medium"
                 label="Album Year"
-                onChange={(e) => setCreateTagInput(e.target.value)}
+                onChange={(e) => handleAlbumDateChange(e.target.value)}
                 sx={{
                   color: "maroon",
                   "& .MuiOutlinedInput-notchedOutline": {
@@ -168,7 +185,7 @@ export default function EditAlbumDialog(props) {
             </FormControl>
           </Grid2>
           <Grid2
-            item
+            item="true"
             sx={{
               flexGrow: 4,
               borderRight: "1px solid lightgray",
