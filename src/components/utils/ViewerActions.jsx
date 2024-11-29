@@ -82,11 +82,12 @@ export default function ViewerActions({
   //Key Value Pair for this is {filterAttribute: ""}, {filterValue: ""}, {filterOperand: "and || or"}
   const [filterValue, setFilterValue] = useState([]);
 
-  const handleFilterDialogClose = () => {
+  const handleFilterDialogClose = (filterValueArgs) => {
+    setFilterValue((prevfilterValue) => (prevfilterValue = filterValueArgs));
     setOpenFilterDialog(false);
   };
-  const handleFilterDialogSave = (filterValue) => {
-    setFilterValue((prevfilterValue) => (prevfilterValue = filterValue));
+  const handleFilterDialogSave = (filterValueArgs) => {
+    setFilterValue((prevfilterValue) => (prevfilterValue = filterValueArgs));
     setOpenFilterDialog(false);
   };
   const handleClick = (event) => {
