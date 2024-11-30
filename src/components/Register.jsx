@@ -144,6 +144,7 @@ export default function Register() {
                   label="Password"
                   name="password"
                   variant="outlined"
+                  type="password"
                   fullWidth
                 />
               </div>

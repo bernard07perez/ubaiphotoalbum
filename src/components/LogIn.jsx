@@ -41,6 +41,7 @@ function LogIn() {
             name="password"
             variant="outlined"
             placeholder="password"
+            type="password"
             fullWidth
           />
         </div>

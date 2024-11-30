@@ -71,7 +71,7 @@ export default function CreateAlbumDialogs({
           id="create-album-dialog"
         >
           <FolderOpenIcon sx={{ fontSize: "3rem" }} />
-          Create Folder
+          Create Album
         </DialogTitle>
         <IconButton
           aria-label="close"

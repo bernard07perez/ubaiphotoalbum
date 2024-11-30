@@ -15,11 +15,17 @@ import Box from "@mui/material/Box";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
+import PhotoFilterIcon from "@mui/icons-material/PhotoFilter";
 
 import PropTypes from "prop-types";
 import { useEffect, useState, useRef } from "react";
 import { ListItem } from "@mui/material";
 
+const muiAlbumActionButtonProp = {
+  size: "small",
+  color: "inherit",
+  className: "hover:text-red-900 hover:font-semibold",
+};
 export default function UploadPhotosFaceTag(props) {
   const { onClose, valueprop, open, ...other } = props;
   const [value, setValue] = useState(valueprop);
@@ -75,10 +81,12 @@ export default function UploadPhotosFaceTag(props) {
       {...other}
     >
       <Stack direction={"row"} sx={{ width: "100%", display: "flex" }}>
-        <DialogTitle color="#7e0404" sx={{ width: "33%" }}>
+        <DialogTitle color="#7e0404" sx={{ width: "45%" }}>
           {title}
         </DialogTitle>
-
+        <Button {...muiAlbumActionButtonProp} startIcon={<PhotoFilterIcon />}>
+          Scan Faces
+        </Button>
         <DialogActions
           sx={{
             display: "flex",

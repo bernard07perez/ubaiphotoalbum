@@ -138,7 +138,7 @@ export default function AlbumGridViewer({
                   <span className="align-middle text-xl ms-2">
                     {albums.Name}
                   </span>
-                  <Tooltip title="Photo Option">
+                  <Tooltip title="Album Option">
                     <IconButton
                       onClick={(e) =>
                         handleClick(e, {

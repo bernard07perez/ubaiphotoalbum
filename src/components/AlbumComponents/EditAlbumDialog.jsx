@@ -20,6 +20,7 @@ import IconButton from "@mui/material/IconButton";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import WarningMessage from "../utils/WarningMessage";
 import { useEffect, useRef, useState } from "react";
 
 const tags = [
@@ -39,6 +40,9 @@ export default function EditAlbumDialog(props) {
 
   const [createdTagArray, setCreatedTagArray] = useState([]);
   const [createTagInput, setCreateTagInput] = useState("");
+
+  const [warningModal, setWarningModal] = useState(false);
+  const warningBody = useRef("");
 
   useEffect(() => {
     // setValue(valueprop);
@@ -91,203 +95,215 @@ export default function EditAlbumDialog(props) {
     setCreatedTagArray(newCreatedTagArray);
   };
 
+  const handleWarningModalClose = () => {
+    setWarningModal(false);
+  };
+
   return (
-    <Dialog
-      sx={{ "& .MuiDialog-paper": { width: "80%", minHeight: "80%" } }}
-      maxWidth="xs"
-      open={open}
-      {...other}
-    >
-      <DialogTitle color="maroon">Edit Album</DialogTitle>
-      <DialogContent
-        dividers
-        sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+    <>
+      <Dialog
+        sx={{ "& .MuiDialog-paper": { width: "80%", minHeight: "80%" } }}
+        maxWidth="xs"
+        open={open}
+        {...other}
       >
-        <Grid2
-          container
-          spacing={2}
-          sx={{
-            flexGrow: 1,
-            display: "flex",
-            flexDirection: "column", // Stacks items vertically
-            height: "100%", // Matches the DialogContent height
-          }}
+        <DialogTitle color="maroon">Edit Album</DialogTitle>
+        <DialogContent
+          dividers
+          sx={{ display: "flex", flexDirection: "column", height: "100%" }}
         >
           <Grid2
-            item="true"
+            container
+            spacing={2}
             sx={{
-              flexShrink: 0, // Prevent shrinking
-              height: "120px", // Fixed or minimum height
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column", // Stacks items vertically
+              height: "100%", // Matches the DialogContent height
             }}
           >
-            <FormControl fullWidth sx={{ margin: 0 }} variant="outlined">
-              <InputLabel
-                htmlFor="album-name-label"
-                // color="none"
-                size="small"
-                sx={{
-                  color: "maroon",
-                  "&.Mui-focused": { color: "maroon" },
-                }}
-              >
-                Album Name
-              </InputLabel>
-              <OutlinedInput
-                id="album-name-label"
-                type="text"
-                value={albumNameInput}
-                size="medium"
-                label="Album Name"
-                onChange={(e) => handleAlbumNameChange(e.target.value)}
-                sx={{
-                  color: "maroon",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "maroon",
-                  },
-                  "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "maroon",
-                  },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "maroon",
-                  },
-                }}
-              />
-            </FormControl>
-            <FormControl fullWidth sx={{ marginY: 1 }} variant="outlined">
-              <InputLabel
-                htmlFor="album-date-label"
-                // color="none"
-                size="small"
-                sx={{ color: "maroon", "&.Mui-focused": { color: "maroon" } }}
-              >
-                Album Year
-              </InputLabel>
-              <OutlinedInput
-                id="album-date-label"
-                type="text"
-                value={albumDateInput}
-                size="medium"
-                label="Album Year"
-                onChange={(e) => handleAlbumDateChange(e.target.value)}
-                sx={{
-                  color: "maroon",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "maroon",
-                  },
-                  "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "maroon",
-                  },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "maroon",
-                  },
-                }}
-              />
-            </FormControl>
-          </Grid2>
-          <Grid2
-            item="true"
-            sx={{
-              flexGrow: 4,
-              borderRight: "1px solid lightgray",
-              paddingX: ".5rem",
-              backgroundColor: "#852221",
-              borderRadius: "10px",
-              minHeight: "360px",
-              padding: 2,
-            }}
-          >
-            <Typography
-              sx={{ mt: 1, mb: 1, fontWeight: "bold" }}
-              variant="subtitle1"
-              component="div"
-              color="#ffa500"
+            <Grid2
+              item="true"
+              sx={{
+                flexShrink: 0, // Prevent shrinking
+                height: "120px", // Fixed or minimum height
+              }}
             >
-              Tags:
-            </Typography>
-            <Stack direction={"row"}>
-              <FormControl
-                fullWidth
-                sx={{ display: "flex", flexGrow: 1, margin: 0 }}
-                variant="outlined"
-              >
+              <FormControl fullWidth sx={{ margin: 0 }} variant="outlined">
                 <InputLabel
-                  htmlFor="createTag-adornment-label"
+                  htmlFor="album-name-label"
+                  // color="none"
                   size="small"
-                  sx={{ color: "white" }}
+                  sx={{
+                    color: "maroon",
+                    "&.Mui-focused": { color: "maroon" },
+                  }}
                 >
-                  Tag
+                  Album Name
                 </InputLabel>
                 <OutlinedInput
-                  id="createTag-adornment-label"
+                  id="album-name-label"
                   type="text"
-                  size="small"
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label={"Create Tag"}
-                        edge="end"
-                        onClick={handleCreateNewTag}
-                        sx={{ color: "white" }}
-                      >
-                        <AddIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Create Tag"
-                  onChange={(e) => setCreateTagInput(e.target.value)}
+                  value={albumNameInput}
+                  size="medium"
+                  label="Album Name"
+                  onChange={(e) => handleAlbumNameChange(e.target.value)}
                   sx={{
-                    color: "white",
+                    color: "maroon",
                     "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "white",
+                      borderColor: "maroon",
                     },
                     "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "white",
+                      borderColor: "maroon",
                     },
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "white",
+                      borderColor: "maroon",
                     },
                   }}
                 />
               </FormControl>
-            </Stack>
-
-            <List dense={false} component="nav">
-              {createdTagArray.map((val, indx) => (
-                <ListItemButton key={`lstIB-${indx}`} sx={{ color: "white" }}>
-                  <ListItemText primary={val} />
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => removeCreatedTag(indx)}
+              <FormControl fullWidth sx={{ marginY: 1 }} variant="outlined">
+                <InputLabel
+                  htmlFor="album-date-label"
+                  // color="none"
+                  size="small"
+                  sx={{ color: "maroon", "&.Mui-focused": { color: "maroon" } }}
+                >
+                  Album Year
+                </InputLabel>
+                <OutlinedInput
+                  id="album-date-label"
+                  type="text"
+                  value={albumDateInput}
+                  size="medium"
+                  label="Album Year"
+                  onChange={(e) => handleAlbumDateChange(e.target.value)}
+                  sx={{
+                    color: "maroon",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "maroon",
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "maroon",
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "maroon",
+                    },
+                  }}
+                />
+              </FormControl>
+            </Grid2>
+            <Grid2
+              item="true"
+              sx={{
+                flexGrow: 4,
+                borderRight: "1px solid lightgray",
+                paddingX: ".5rem",
+                backgroundColor: "#852221",
+                borderRadius: "10px",
+                minHeight: "360px",
+                padding: 2,
+              }}
+            >
+              <Typography
+                sx={{ mt: 1, mb: 1, fontWeight: "bold" }}
+                variant="subtitle1"
+                component="div"
+                color="#ffa500"
+              >
+                Tags:
+              </Typography>
+              <Stack direction={"row"}>
+                <FormControl
+                  fullWidth
+                  sx={{ display: "flex", flexGrow: 1, margin: 0 }}
+                  variant="outlined"
+                >
+                  <InputLabel
+                    htmlFor="createTag-adornment-label"
+                    size="small"
+                    sx={{ color: "white" }}
                   >
-                    <DeleteIcon sx={{ color: "white" }} />
-                  </IconButton>
-                </ListItemButton>
-              ))}
-            </List>
+                    Tag
+                  </InputLabel>
+                  <OutlinedInput
+                    id="createTag-adornment-label"
+                    type="text"
+                    size="small"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label={"Create Tag"}
+                          edge="end"
+                          onClick={handleCreateNewTag}
+                          sx={{ color: "white" }}
+                        >
+                          <AddIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Create Tag"
+                    onChange={(e) => setCreateTagInput(e.target.value)}
+                    sx={{
+                      color: "white",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Stack>
+
+              <List dense={false} component="nav">
+                {createdTagArray.map((val, indx) => (
+                  <ListItemButton key={`lstIB-${indx}`} sx={{ color: "white" }}>
+                    <ListItemText primary={val} />
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => removeCreatedTag(indx)}
+                    >
+                      <DeleteIcon sx={{ color: "white" }} />
+                    </IconButton>
+                  </ListItemButton>
+                ))}
+              </List>
+            </Grid2>
           </Grid2>
-        </Grid2>
-      </DialogContent>
-      <DialogActions sx={{ paddingX: 4 }}>
-        <Button
-          autoFocus
-          size="small"
-          color="inherit"
-          sx={{ "&:hover": { color: "maroon", backgroundColor: "#ffa500" } }}
-          onClick={handleEditAlbumCancel}
-        >
-          Cancel
-        </Button>
-        <Button
-          size="small"
-          color="inherit"
-          sx={{ "&:hover": { color: "maroon", backgroundColor: "#ffa500" } }}
-          onClick={handleEditAlbumSave}
-        >
-          Save Changes
-        </Button>
-      </DialogActions>
-    </Dialog>
+        </DialogContent>
+        <DialogActions sx={{ paddingX: 4 }}>
+          <Button
+            autoFocus
+            size="small"
+            color="inherit"
+            sx={{ "&:hover": { color: "maroon", backgroundColor: "#ffa500" } }}
+            onClick={handleEditAlbumCancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            size="small"
+            color="inherit"
+            sx={{ "&:hover": { color: "maroon", backgroundColor: "#ffa500" } }}
+            onClick={handleEditAlbumSave}
+          >
+            Save Changes
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <WarningMessage
+        open={warningModal}
+        onClose={handleWarningModalClose}
+        title="Edit Album"
+        warnBody={<>{warningBody.current}</>}
+      />
+    </>
   );
 }
 

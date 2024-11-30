@@ -5,7 +5,7 @@ export const ALBUM_RECORDS = [
       "ancestor":[
          0
       ],
-      "Name":"Science Fair",
+      "Name":"Science",
       "Owner":1,
       "DateCreated":"01-Jan-2020",
       "tags":[
@@ -207,9 +207,10 @@ export const ALBUM_RECORDS = [
                   ]
                }
             ]
-         }],
+         }]
          
      },
+     
      {
       "id":2,
       "type":"folder",
