@@ -121,12 +121,18 @@ export default function UploadPhotosFaceTag(props) {
           display={"flex"}
           width="100%"
           paddingX={3}
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <Button
+            size="small"
             variant="outlined"
             endIcon={<PersonAddAltIcon fontSize="small" />}
             onClick={handleSaveFTClick} //Collect FaceTag Array and pass as Argument
             sx={{
+              height: 40,
               color: "#cc8400",
               "&:hover": { color: "#ffa500" },
               borderColor: "#cc8400",
