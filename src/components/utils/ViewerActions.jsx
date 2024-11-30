@@ -271,12 +271,12 @@ export default function ViewerActions({
         >
           <AddAPhotoIcon sx={menuitemicon} /> Upload Photos
         </MenuItem>
-        <MenuItem
+        {/* <MenuItem
           onClick={() => isUploadPhotoClicked("Folder")}
           sx={{ height: "50px" }}
         >
           <DriveFolderUploadIcon sx={menuitemicon} /> Batch Folder Upload
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
       <SearchFilterDialog
         openFilterDialog={openFilterDialog}
