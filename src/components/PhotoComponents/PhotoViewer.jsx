@@ -19,6 +19,7 @@ import Button from "@mui/material/Button";
 
 import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -330,6 +331,9 @@ export default function PhotoViewer({ retrieveData, isUploadPhotoClick }) {
       >
         <MenuItem onClick={handleEditPhotoDialogOpen}>
           <DriveFileRenameOutlineIcon /> Edit
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ArrowCircleDownIcon /> Download
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <DeleteForeverIcon /> Delete

@@ -30,6 +30,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SelectAllSharpIcon from "@mui/icons-material/SelectAllSharp";
 import AddIcon from "@mui/icons-material/Add";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+
 import SearchFilterDialog from "./SearchFilterDialog";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -193,6 +195,9 @@ export default function ViewerActions({
                 Rename
               </Button>
             )} */}
+            <Button {...muiAlbumActionButtonProp} startIcon={<ArrowCircleDownIcon />}>
+              Download
+            </Button>
             <Button {...muiAlbumActionButtonProp} startIcon={<VscTrash />}>
               Delete
             </Button>

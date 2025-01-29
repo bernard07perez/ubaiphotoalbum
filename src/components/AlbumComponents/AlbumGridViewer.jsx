@@ -16,6 +16,7 @@ import AlbumEmptyCover from "../../assets/img/react.svg";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import { orange } from "@mui/material/colors";
 import ImageWithFallback from "../utils/ImageWithFallback";
 
@@ -201,8 +202,12 @@ export default function AlbumGridViewer({
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
+
         <MenuItem onClick={handleEdit}>
           <DriveFileRenameOutlineIcon /> Edit
+        </MenuItem>
+        <MenuItem onClick={handleEdit}>
+          <ArrowCircleDownIcon /> Download
         </MenuItem>
         <MenuItem onClick={handleDelete}>
           <DeleteForeverIcon /> Delete
