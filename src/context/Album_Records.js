@@ -12,10 +12,10 @@ export const ALBUM_RECORDS = [
          {
             "facetag": [
                {
-                  "uid": 1
+                  "uid": "Face 1"
                },
                {
-                  "uid": 2
+                  "uid": "Face 2"
                }
             ],
             "keywordtag": [
@@ -37,10 +37,10 @@ export const ALBUM_RECORDS = [
                {
                   "facetag": [
                      {
-                        "uid": 1
+                        "uid": "Face 1"
                      },
                      {
-                        "uid": 2
+                        "uid": "Face 2"
                      }
                   ],
                   "keywordtag": [
@@ -62,10 +62,10 @@ export const ALBUM_RECORDS = [
                {
                   "facetag": [
                      {
-                        "uid": 1
+                        "uid": "Face 1"
                      },
                      {
-                        "uid": 2
+                        "uid": "Face 2"
                      }
                   ],
                   "keywordtag": [
@@ -87,10 +87,10 @@ export const ALBUM_RECORDS = [
                {
                   "facetag": [
                      {
-                        "uid": 1
+                        "uid": "Face 1"
                      },
                      {
-                        "uid": 2
+                        "uid": "Face 2"
                      }
                   ],
                   "keywordtag": [
@@ -112,10 +112,10 @@ export const ALBUM_RECORDS = [
                {
                   "facetag": [
                      {
-                        "uid": 1
+                        "uid": "Face 1"
                      },
                      {
-                        "uid": 2
+                        "uid": "Face 2"
                      }
                   ],
                   "keywordtag": [
@@ -137,7 +137,7 @@ export const ALBUM_RECORDS = [
                {
                   "facetag": [
                      {
-                        "uid": 2
+                        "uid": "Face 2"
                      }
                   ],
                   "keywordtag": [
@@ -159,7 +159,7 @@ export const ALBUM_RECORDS = [
                {
                   "facetag": [
                      {
-                        "uid": 2
+                        "uid": "Face 2"
                      }
                   ],
                   "keywordtag": [
